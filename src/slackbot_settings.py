@@ -9,5 +9,6 @@ load_dotenv(dotenv_path)
 API_TOKEN = os.environ.get('TOKEN')
 
 PLUGINS=[
-    'my_plugins',
+    'estimate_finish_time',
+    'money_manage'
 ]
