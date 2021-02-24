@@ -79,12 +79,14 @@ def pay(message, args):
         'entry.901523276': kussy_load, #くっしーの負担割合
     }
     res = requests.post(FORM_URL, params=params)
-    message.send('コマンドにより出費登録がされました。\n' + 
-        f'支払者: {payer}\n' +
-        f'支払額: {price}\n' +
-        f'物品名: {item}\n'+
-        f'負担割合: {load_rate}\n')
-
+    if res.status_code == requests.codes.ok:
+        message.send('コマンドにより出費登録がされました。\n' + 
+            f'支払者: {payer}\n' +
+            f'支払額: {price}\n' +
+            f'物品名: {item}\n'+
+            f'負担割合: {load_rate}\n')
+    else:
+        message.send('コマンドによる登録はエラーが発生しました。')
 """    
 user    = message.channel._client.users[message.body['user']]
 channel = message.channel._client.channels[message.body['channel']]
