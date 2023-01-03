@@ -15,4 +15,4 @@ RUN pip install --upgrade pip
 RUN pip install --upgrade setuptools
 RUN pip install slack_bolt python-dotenv gspread oauth2client 
 
-# CMD ["python", "main.py"]
+CMD ["python", "main.py"]
