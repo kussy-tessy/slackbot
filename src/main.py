@@ -45,16 +45,19 @@ def pay(message, say):
     
     item = args[0]
     price = int(eval(args[1]))
-    payer = user
+    payer = None
     kussy_load = 1
     shallen_load = 1
     load_rate = '割り勘'
 
-    if '-r' in args: # コマンド実行者が支払者と異なる
-        if user == KUSSY:
-            payer = 'しゃれんきゅん'
-        elif user == SHALLEN:
-            payer = 'くっしー'
+    # 支払い者
+    if user == KUSSY:
+        payer = 'くっしー'
+    else:
+        payer = 'しゃれんきゅん'
+    if '-r' in args: # 支払い者リバース
+        payer = 'くっしー' if payer == 'しゃれんきゅん' else 'くっしー'
+
     if '-k' in args: # くっしー負担分をしゃれんきゅんが立て替えた
         payer = 'しゃれんきゅん'
         kussy_load = 1
@@ -75,16 +78,21 @@ def pay(message, say):
         'entry.1246589948': item, # 物品名
         'entry.1088414711': shallen_load, #しゃれんきゅんの負担割合
         'entry.901523276': kussy_load, #くっしーの負担割合
+        'entry.284510173': '',
+        'fvv': 1,
+        'pageHistory': 0,
+        'draftResponse': []
     }
-    res = requests.post(FORM_URL, params=params)
+    res = requests.post(FORM_URL, data=params)
+
     if res.status_code == requests.codes.ok:
-        message.send('コマンドにより出費登録がされました。\n' + 
+        say('コマンドにより出費登録がされました。\n' + 
             f'支払者: {payer}\n' +
             f'支払額: {price}\n' +
             f'物品名: {item}\n'+
             f'負担割合: {load_rate}\n')
     else:
-        message.send('コマンドによる登録はエラーが発生しました。')
+        say('コマンドによる登録はエラーが発生しました。')
 
 # アプリを起動します
 if __name__ == "__main__":
