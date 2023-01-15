@@ -50,9 +50,6 @@ def pay(message, say):
     shallen_load = 1
     load_rate = '割り勘'
 
-    print(item, price, payer)
-    return
-
     if '-r' in args: # コマンド実行者が支払者と異なる
         if user == KUSSY:
             payer = 'しゃれんきゅん'
@@ -92,3 +89,4 @@ def pay(message, say):
 # アプリを起動します
 if __name__ == "__main__":
     SocketModeHandler(app, os.environ["SLACK_APP_TOKEN"]).start()
+    
